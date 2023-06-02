@@ -1,0 +1,53 @@
+<!DOCTYPE  html>
+<html>
+   <head>
+     <meta cahrset="utf-8">
+     <meta name="viewport" content="width=device-width", initial-scle=1">
+     <!-- <script src="https://code.jquery.com/jquery-latest.js"></scirpt> -->
+     <script
+  src="https://code.jquery.com/jquery-3.7.0.js"
+  integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+  crossorigin="anonymous"></script>
+
+     <title>CEO개발부트캠프</title>
+
+     <style>
+       #ceo {
+           background-color:red;
+           color:white;
+       }
+       #lifehacking{
+         width:500px;
+       }
+     </style>
+
+    <script>
+      $(document).ready(()=>{
+        $("#ceo").on("click", ()=>{
+          x=3;
+          y=5;
+          // alert("클릭한 경우");
+          alert(x/y);
+        });
+          // f(x)= 3x+1
+          // f(3)>10
+
+          function life(x){
+            return 3*x+1;
+          }
+
+          z=life(3); //life에다가 3이라는 값을 전달해서 나온 값이 Z에 담기는거임
+          alert(z);
+
+      });
+
+    </script>
+   </head>
+
+   <body>
+     <div id="ceo">안녕하세요.</div>
+     <div style="background-color:black; color:white;">안녕하세요</div>
+     <input style="width:500px;" type="text" placeholder="메세지를 입력해주세요.">
+      <input id="lifehacking" type="checkbox">
+  </body>
+</html>

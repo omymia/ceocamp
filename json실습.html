@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+   <head>
+       <meta charset="utf-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1">
+       <title>Json 예제 실습</title>
+       <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+       <script>
+         $(document).ready(() => {
+          let byul = ["이한별", 33, 176, 70, "bdbyul@naver.com", "0"];
+
+          let byulJson = {
+            name: "이한별",
+            age: 33,
+            height: 176,
+            weight: 70,
+            email: "bdbyul@naver.com",
+            type: "0",
+          };
+
+          let userList = [
+            {name: "이한별", age:33, type:"0"},
+            {name: "김정규", age:33, type:"0"},
+            {name: "황호조", age:33, type:"0"},
+            {name: "김수신", age:33, type:"0"},
+            {name: "김정무", age:33, type:"0"},
+            {name: "이주빈", age:33, type:"0"},
+          ];
+          //
+          // let byul2 = userList[0];
+          // alert(byul2["name"]);  이거랑 같은거임
+
+          // = userlist[0]["name"] 위에거를 한번에 쓴거임
+          for (let i = 0; i < 6; i++) {
+            $("#userList").append("<div>" + userList[i]["name"]+userList[i]["age"] + "</div>");
+          }
+        });
+      </script>
+  </head>
+  <body>
+    <div id="userList"></div>
+  </body>
+</html>
