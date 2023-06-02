@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://code.jquery.com/jquery-latest.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-database.js"></script>
+    <title>Welcome to Firebase Hosting</title>
+    <script>
+
+const firebaseConfig = {
+   apiKey: "AIzaSyDopbcsnfMnp7Y7ApE5sdrNkMBvpnh9gZ4",
+   authDomain: "testdatabase-50.firebaseapp.com",
+   databaseURL: "https://testdatabase-50-default-rtdb.firebaseio.com",
+   projectId: "testdatabase-50",
+   storageBucket: "testdatabase-50.appspot.com",
+   messagingSenderId: "316215367481",
+   appId: "1:316215367481:web:dba3066546856c8db27ae8"
+ };
+
+
+
+ firebase.initializeApp(firebaseConfig);
+ let database = firebase.database();
+//
+// let date = new Date();
+// // alert(date);
+// //  database.ref("user").set("안녕하세요");
+// //  database.ref("byul").set("qksrkq하세요");
+// // id가 타임레코드인 요소를 클릭했을때 이런내용이 실행되게해줘 ref안에 키값을주기
+// //date.getTime();시간을 밀리세컨드
+
+$(document).ready(()=>{
+
+     $("#chatList").hide(); //채팅용
+
+     $("#join").on("click", ()=>{
+       let id =$("#idvalue").val();
+       let pwd = $("#pwdvalue").val();
+       database.ref("members/"+id).set(pwd); //ref 키값 set밸류값
+
+     });
+
+   $("#login").on("click",()=>{
+     let id = $("#idvalue").val();
+     let pwd = $("#pwdvalue").val();
+     database.ref("members/"+id).on("value",(snapshot)=>{
+       if(snapshot.val()){
+         if(pwd==snapshot.val()){
+           alert("로그인 되었습니다.");
+           $("#chatList").show();
+           // loadMsgs();채팅 로그인 기능 만드는 경우, 이렇게 로그인됐을때만 loadMsgs하기
+         } else {
+           alert("패스워드 일치하지 않습니다.");
+         }
+       }else{
+         alert("가입되지 않은 회원");
+       }
+     });
+   })
+ });
+//   function sendMsg(){
+//    $("#timeRecord").on("click",()=>{
+//      let date = new Date();
+//      let message = $("#message").val(); //값 넣는 법
+//      // database.ref("times").set(date.getTime());
+//       database.ref("msgs/"+date.getTime()).set(message);
+//
+//    });
+//  }
+// //
+// sendMsg();
+//  function loadMsgs(){
+// //값 가져오는법
+//     database.ref("msgs").on("value",(snapshot)=>{
+//       // alert(snapshot);
+//       $("#chatList").html("");  //안에있는 값을 한번 지워주고 밑의 코드를 통해서 값을 가져온다
+//       snapshot.forEach((child)=>{
+//         // alert(child.val());
+//          $("#chatList").append("<div>"+child.val()+"</div>");  //채팅앱처럼 값 나오게하는법
+//      })
+//   });
+// }
+// loadMsgs();
+// //snapshot 은 그냥 변수이름임 s라고 해도 상관없음
+// //키값이 byul인 것의 value만 가져오는법
+// database.ref("byul").on("value", (snapshot)=>{
+//   alert(snapshot.val());
+//
+// })
+// })
+//  //  $.ajax({
+//  //      url: "https://goweather.herokuapp.com/weather/seoul", // 클라이언트가 요청을 보낼 서버의 URL 주소
+//  //      type: "GET",                             // HTTP 요청 방식(GET, POST)
+//  //      dataType: "json"                         // 서버에서 보내줄 데이터의 타입
+//  //      success: function(res){
+//  //        $("#chatList").html(res);  //성공적이면 다음함수를 실행시켜라 라는 뜻
+//  //      }
+//  //   })
+//  // })
+//  //
+//
+// //   .done(function(json) {
+// //     alert(json);
+// //     $("#chatList").html(json);
+// //     json.forEach((child) => {
+// //       alert(child.val());
+// //     });
+// //   })
+// // })
+//
+
+ </script>
+  </head>
+  <body>
+    <input type="text" id="idvalue" placeholder="아이디">
+    <input type="text" id="pwdvalue" placeholder="패스워드">
+
+    <button id="join">회원가입 </button>
+    <button id="login">로그인 </button>
+    <div id="chatList">
+      채팅 내용
+    </div>
+  </body>
+</html>

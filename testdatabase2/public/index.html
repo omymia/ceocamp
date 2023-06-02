@@ -1,0 +1,210 @@
+<!-- <!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://code.jquery.com/jquery-latest.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-database.js"></script>
+    <title>Welcome to Firebase Hosting</title>
+    <script>
+
+// const firebaseConfig = {
+//    apiKey: "AIzaSyDopbcsnfMnp7Y7ApE5sdrNkMBvpnh9gZ4",
+//    authDomain: "testdatabase-50.firebaseapp.com",
+//    databaseURL: "https://testdatabase-50-default-rtdb.firebaseio.com",
+//    projectId: "testdatabase-50",
+//    storageBucket: "testdatabase-50.appspot.com",
+//    messagingSenderId: "316215367481",
+//    appId: "1:316215367481:web:dba3066546856c8db27ae8"
+//  };
+
+
+ //
+ // firebase.initializeApp(firebaseConfig);
+ // let database = firebase.database();
+//
+// let date = new Date();
+// // alert(date);
+// //  database.ref("user").set("안녕하세요");
+// //  database.ref("byul").set("qksrkq하세요");
+// // id가 타임레코드인 요소를 클릭했을때 이런내용이 실행되게해줘 ref안에 키값을주기
+// //date.getTime();시간을 밀리세컨드
+
+$(document).ready(()=>{
+
+  $.ajax({
+      url: "https://helloworld-i2jvyjflma-uc.a.run.app", // 클라이언트가 요청을 보낼 서버의 URL 주소
+      type: "POST",                             // HTTP 요청 방식(GET, POST)
+      dataType: "json"
+    })
+    .done(function(json){
+      // console.log(json);
+      for(key in json){
+        $("#chatList").append("<div>"+json[key]+"</div>");
+      }
+    });
+
+    // $("#chatList").hide(); //채팅용
+
+    $("#join").on("click", ()=>{
+      let id =$("#idvalue").val();
+      let pwd = $("#pwdvalue").val();
+      database.ref("members/"+id).set(pwd); //ref 키값 set밸류값
+
+    });
+
+   $("#login").on("click",()=>{
+    let id = $("#idvalue").val();
+    let pwd = $("#pwdvalue").val();
+    database.ref("members/"+id).on("value",(snapshot)=>{
+      if(snapshot.val()){
+        if(pwd==snapshot.val()){
+          alert("로그인 되었습니다.");
+          $("#chatList").show();
+          // loadMsgs();채팅 로그인 기능 만드는 경우, 이렇게 로그인됐을때만 loadMsgs하기
+        } else {
+          alert("패스워드 일치하지 않습니다.");
+        }
+      }else{
+        alert("가입되지 않은 회원");
+      }
+    });
+   })
+   });
+
+ </script>
+  </head>
+  <body>
+    <input type="text" id="idvalue" placeholder="아이디">
+    <input type="text" id="pwdvalue" placeholder="패스워드">
+
+    <button id="join">회원가입 </button>
+    <button id="login">로그인 </button>
+    <div id="chatList">
+      채팅 내용
+    </div>
+  </body>
+</html> -->
+
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://code.jquery.com/jquery-latest.js"></script>
+    <!-- 밑에 두개 스크립트는, 프론트단에서 파이어베이스접근하려고 쓴거라서 없어도 정상작동됨 -->
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-database.js"></script>
+    <title>Welcome to Firebase Hosting</title>
+    <script>
+
+    $(document).ready(()=>{
+
+    function joinCall(){
+      let idvalue =$("#idvalue").val();
+      let pwdvalue =$("#pwdvalue").val();
+      $.ajax({
+          url: "https://join-i2jvyjflma-uc.a.run.app", // 클라이언트가 요청을 보낼 서버의 URL 주소
+          type: "POST",
+          data: {id:idvalue, pwd:pwdvalue},                         // HTTP 요청 방식(GET, POST)
+          dataType: "json"
+        })
+        .done(function(json){
+        });
+      }
+
+
+      function loginCall(){
+        let idvalue =$("#idvalue").val();
+        let pwdvalue =$("#pwdvalue").val();
+        $.ajax({
+            url: "https://login-i2jvyjflma-uc.a.run.app", // 클라이언트가 요청을 보낼 서버의 URL 주소
+            type: "POST",
+            data: {id:idvalue, pwd:pwdvalue},     //요청할때 이 데이터를 담아서 실행시킨다
+            dataType: "json"
+          })
+          .done(function(json){
+            if(json["result_code"]==1]{
+              // loadMsgs();이런식으로해서 밑에 어디 loadmsg함수 만들어놔야됨
+            }else if(json["reslut_code"]==2){
+              alert(json["reslut"]);
+            }else if(json["reslut_code"]==3)
+              alert(json["reslut"]);
+            console.log(json);
+            alert(json["result"]);
+          });
+        
+
+        //sendSMS("01091815245","반갑습니다."); //보내게하는 코드
+
+        // function sendSMS(phone, text){
+        //   var url = text.length < 30
+        //           ? "https://www.munja123.com/Remote/RemoteSms.html"
+        //           : "https://www.munja123.com/Remote/RemoteMms.html",
+        //       data = {
+        //          remote_id:"hbyullee", //아이디,인증번호 내걸로 바꾸기
+        //          remote_pass: "junior", //비밀번호
+        //          remote_num: 1,
+        //          remote_phone: phone,
+        //          remote_callback: "01091815245",
+        //          remote_msg: text,
+        //       };
+        //
+        //       $.post(url, data, function(obj){});
+        // }
+
+        function sendCall(){
+          let phoneval = $("#idvalue").val();
+
+            $.ajax({
+              url: "https://sendSMS-i2jvyjflma-uc.a.run.app"
+              type: "POST",
+              data: {phone:phoneval},     //요청할때 이 데이터를 담아서 실행시킨다
+              dataType: "json"
+            })
+            .done(function(json){
+              console.log(json);
+            });
+
+        $("#join").on("click", ()=>{ //아이디가 Join인걸 불러와서 그걸 클릭했을때 joincall이 실행되도록
+          joinCall();
+          // let id =$("#idvalue").val();
+          // let pwd =$("#pwdvalue").val();
+          // database.ref("members/"+id).set(pwd);
+        })
+
+       $("#login").on("click",()=>{
+         loginCall();
+        // let id = $("#idvalue").val();
+        // let pwd = $("#pwdvalue").val();
+        //sendSMS("01091815245","반갑습니다."); //로그인했을때 문자가 전송되게 한다 가입할때 휴대폰번호도
+        //입력하게 만든다고치면 그 입력한 휴대폰번호로 문자를 보낼수있따
+
+       })
+
+       $("#send").on("click, ()=>{
+        sendCall();
+       });
+    })
+
+      </script>
+      </head>
+      <body>
+        <input type="text" id="idvalue" placeholder="아이디">
+        <input type="password" id="pwdvalue" placeholder="패스워드">
+        <input type="text" id="phone" placeholder="휴대폰 번호">
+
+        <button id="join">회원가입 </button>
+        <button id="login">로그인 </button>
+        <button id="send">메세지보내기 </button>
+
+        <div id="chatList">
+          채팅 내용
+        </div>
+      </body>
+      </html>
